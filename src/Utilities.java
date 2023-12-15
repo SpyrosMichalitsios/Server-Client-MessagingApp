@@ -10,7 +10,7 @@ public interface Utilities extends Remote{
     String showAccounts(int authToken)
             throws RemoteException;
     //The user/client can send a message to another user.
-    void sendMessage(int authToken,String messageBody,String receiver)
+    String sendMessage(int authToken,String messageBody,String receiver)
             throws RemoteException;
     //The user/client can see a list of all the messages send to him
     void showInbox(int authToken)

@@ -36,43 +36,45 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
 
     @Override //The server shows all the accounts currently existing if the authentication token is correct
     public String showAccounts(int authToken) throws RemoteException {
-        int counter=1;
         String result="";
+
         if (isAuthenticated(authToken)){//Always check if the user is  authenticated
+            int counter=1;
             for(Account a : accountMap.values()){ //Searching in the accounts map.
                 result=result.concat(counter + ". " + a.getUsername() + "\n");
                 counter++;
             }
         }
         else//Not authenticated.
-          result="Invalid Auth Token \n";
+            result= "Invalid Auth Token \n";
 
-       return result;
+        return result;
     }
 
     @Override/*The method for the client to send a message to another user.
     If the receiver does not exist the method returns the proper answer.
     If the receiver exist the message is added to the receiver's messagebox.
     */
-    public void sendMessage(int authToken, String messageBody, String receiver) throws RemoteException {
+    public String sendMessage(int authToken, String receiver, String messageBody) throws RemoteException {
 
         if (isAuthenticated(authToken)){//Always check if the user is  authenticated
+
             if (userExists(receiver)){//Check if the receiver exists.
                 Message newMessage = new Message(accountMap.get(authToken).getUsername(), receiver, messageBody);
                 for(Account a :accountMap.values()){
                     if(a.getUsername().equals(receiver)){
                         a.addNewMessage(newMessage);// Add the message in the messagebox so the receiver can access it in the future.
-                        System.out.println("OK \n");
                     }
                 }
+                return  "OK";
             }
-            else//if it does not.
-                System.out.println("User does not exist \n");
+            else//if the receiver does not exist.
+                return "User does not exist \n";
         }
-        else//Not authenticated.
-            System.out.println("Invalid Auth Token \n");
-
+        else//User not authenticated.
+            return "Invalid Auth Token \n";
     }
+
 
     @Override//This method prints the users inbox.
     public void showInbox(int authToken) throws RemoteException {

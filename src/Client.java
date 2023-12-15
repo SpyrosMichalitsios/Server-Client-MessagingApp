@@ -69,7 +69,7 @@ public class Client {
                             try {//Check if the authToken entered is an int.
                                 System.out.println("we are in 3");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
-                                stub.sendMessage(tkn, args[4], args[5]);
+                                System.out.println(stub.sendMessage(tkn,args[4],args[5]));
                             } catch (NumberFormatException e) {
                                 System.out.println("The authToken should be an integer\n");
                             }

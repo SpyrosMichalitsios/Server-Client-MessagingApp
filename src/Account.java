@@ -13,7 +13,7 @@ public class Account implements java.io.Serializable {
     public Account(String username,int authToken){
         this.username=username;
         this.authToken=authToken;
-        messageBox=new ArrayList<Message>();
+        messageBox=new ArrayList<>();
     }
 
     //Necessary getters and setters.
