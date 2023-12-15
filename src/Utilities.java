@@ -13,10 +13,10 @@ public interface Utilities extends Remote{
     String sendMessage(int authToken,String messageBody,String receiver)
             throws RemoteException;
     //The user/client can see a list of all the messages send to him
-    void showInbox(int authToken)
+    String showInbox(int authToken)
             throws RemoteException;
     //The user/client can read the message with the given id from his messagebox.
-    void readMessage(int authToken,int messageId)
+    String readMessage(int authToken,int messageId)
             throws RemoteException;
     //The user/client can delete the message with the given id from his messagebox.
     void deleteMessage(int authToken,int messageId)

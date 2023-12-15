@@ -77,42 +77,42 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
 
 
     @Override//This method prints the users inbox.
-    public void showInbox(int authToken) throws RemoteException {
+    public String showInbox(int authToken) throws RemoteException {
+        String result="";
         if(isAuthenticated(authToken)){//Always check if the user is  authenticated
 
             for(Message m: accountMap.get(authToken).getMessageBox()){//For every message in the users messagebox
 
-                String output=m.getMessageId()+". from:"+ m.getSender();//We create the necessary string.
+                result=result.concat(m.getMessageId()+". from:"+ m.getSender());//We create the necessary string.
 
                 if (!m.getIsRead())//If the message has not been read, we add the '*' after the message to mark it as unread.
-                    output+="*";
-                System.out.println(output+"\n");
+                    result=result.concat("*");
+
+                result=result.concat("\n");
             }
+            return result;
         }
         else//Not authenticated.
-            System.out.println("Invalid Auth Token \n");
-
+            return "Invalid Auth Token \n";
     }
 
     @Override //This method implements the users request to read one of his messages in his messagebox.
-    public void readMessage(int authToken, int messageId) throws RemoteException {
-        if(isAuthenticated(authToken)){//Always check if the user is  authenticated
+    public String readMessage(int authToken, int messageId) throws RemoteException {
 
-            boolean found=false;//The message has not been found yet.
+        if(isAuthenticated(authToken)){//Always check if the user is  authenticated
 
             for(Message m:accountMap.get(authToken).getMessageBox()){//Search for the message ID in the user's messagebox.
 
                 if(m.getMessageId()==messageId){//If the message ID matches an ID from the client's messagebox.
                     m.setIsRead(true);//The message is now read.
-                    found=true;//The message has been found
-                    System.out.println("("+m.getSender()+")"+ m.getBody()+"\n");
+                    return "("+m.getSender()+")"+ m.getBody()+"\n";
                 }
             }
-            if (!found)//If the message has not been found.
-                System.out.println("Message ID does not exist \n");
+            return "Message ID does not exist \n";
         }
         else//Not authenticated.
-            System.out.println("Invalid Auth Token \n");
+            return "Invalid Auth Token \n";
+
     }
 
     @Override//This method implements the deletion of a message from a user's messagebox when requested.
