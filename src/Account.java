@@ -39,7 +39,5 @@ public class Account implements java.io.Serializable {
         messageBox.remove(aMessage);
     }
 
-    //This generates a unique 4-digit authentication token for the user.The first time it will become 999
-
 
 }

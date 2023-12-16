@@ -20,10 +20,10 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
     @Override /*The client wants to create an account.We first check if the username is valid or if it  already exists.*/
     public int createAccount(String username) throws RemoteException {
 
-        if(!isValid(username)) {//If the username is invalid.
+        if(!usernameIsValid(username)) {//If the username is invalid.
             return -1;
         }
-        else if (!isAvailable(username)){    //If the username is not available.
+        else if (usernameExists(username)){    //If the username already exists.
            return 0;
         }
         else{//If the username is fitting the conditions we create the account and add it in the servers map,returning the authentication token.
@@ -59,7 +59,7 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
 
         if (isAuthenticated(authToken)){//Always check if the user is  authenticated
 
-            if (userExists(receiver)){//Check if the receiver exists.
+            if (usernameExists(receiver)){//Check if the receiver exists.
                 Message newMessage = new Message(accountMap.get(authToken).getUsername(), receiver, messageBody);
                 for(Account a :accountMap.values()){
                     if(a.getUsername().equals(receiver)){
@@ -140,18 +140,18 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
     }
 
     //With this method we are checking if the username the client entered is valid.
-    public boolean isValid(String wannabeUsername){
+    public boolean usernameIsValid(String wannabeUsername){
         //Check if the username contains only letters numbers and "_".
         return wannabeUsername.matches("[a-zA-Z0-9_]+");
     }
 
     //With this method we can check if the username is available or if it already exists.
-    public boolean isAvailable(String wannabeUsername){
+    public boolean usernameExists(String wannabeUsername){
         for (Account a: accountMap.values())  {//Check if username already exists.
             if (a.getUsername() .equals(wannabeUsername) )//If it exists.
-                return false;
+                return true;
         }
-        return true;//The username does not exist.
+        return false;//The username does not exist.
     }
 
     // This method authenticates the user by checking if the token entered corresponds to an account.
@@ -170,13 +170,5 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
             throw new IllegalArgumentException("Tokens are over.The server cannot server  more clients :/ \n");//if we cannot make more 4-digit codes.
     }
 
-    //A method to check if a user exists before sending him a message.
-    public boolean userExists(String username){
-        for(Account a: accountMap.values()){
-            if (a.getUsername().equals(username))
-                return true;
-        }
-        return false;
-    }
 
 }

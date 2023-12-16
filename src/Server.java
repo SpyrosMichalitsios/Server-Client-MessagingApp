@@ -18,7 +18,7 @@ public class Server {
             reg.rebind("utilities",stub);
 
             System.out.println("Server is up and running...");
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("Failed to connect to the server");}
 
     }
 

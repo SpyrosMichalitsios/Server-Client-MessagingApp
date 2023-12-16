@@ -15,7 +15,9 @@ public class Client {
             args[2]=FN_ID
             args[3...]=the rest of the arguments.
              */
-            if(args.length!=0) {
+
+            if(args.length>=4) {//Check if the command has at least 4 arguments.Else it is not in the correct format.
+
                 ipAddress = args[0];
                 portNumber = Integer.parseInt(args[1]);
                 fnID = Integer.parseInt(args[2]);
@@ -45,7 +47,6 @@ public class Client {
 
                     switch (fnID) {//Depending on the fnID do accordingly.
                         case 1://Create account.
-                            System.out.println("we are in 1");//FOR DEBUGGING
                             int result=stub.createAccount(args[3]);
                             switch (result) {
                                 case -1 ->//The username is invalid.
@@ -58,7 +59,6 @@ public class Client {
                             break;
                         case 2://Show Accounts.
                             try {//Check if the authToken entered is an int.
-                                System.out.println("we are in 2");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 System.out.println(stub.showAccounts(tkn));
                             } catch (NumberFormatException e) {
@@ -67,7 +67,6 @@ public class Client {
                             break;
                         case 3://Send message.
                             try {//Check if the authToken entered is an int.
-                                System.out.println("we are in 3");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 System.out.println(stub.sendMessage(tkn,args[4],args[5]));
                             } catch (NumberFormatException e) {
@@ -76,7 +75,6 @@ public class Client {
                             break;
                         case 4://Show inbox.
                             try {//Check if the authToken entered is an int.
-                                System.out.println("we are in 4");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 System.out.println(stub.showInbox(tkn));
                             } catch (NumberFormatException e) {
@@ -85,7 +83,6 @@ public class Client {
                             break;
                         case 5://Read message.
                             try {//Check if the authToken and the message id entered are an int.
-                                System.out.println("we are in 5");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 int msgID = Integer.parseInt(args[4]);
                                 System.out.println(stub.readMessage(tkn, msgID));
@@ -95,7 +92,6 @@ public class Client {
                             break;
                         case 6://Delete message.
                             try {//Check if the authToken and the message id entered are an int.
-                                System.out.println("we are in 6");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 int msgID = Integer.parseInt(args[4]);
                                 System.out.println(stub.deleteMessage(tkn, msgID));

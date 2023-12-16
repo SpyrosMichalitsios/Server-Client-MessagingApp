@@ -1,6 +1,5 @@
 import java.rmi.*;
 
-
 //The interface including all utilities that a client can ask.
 public interface Utilities extends Remote{
     //The user/client can create an account choosing his own username.
