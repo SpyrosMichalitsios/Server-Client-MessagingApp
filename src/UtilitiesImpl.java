@@ -81,6 +81,9 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
         String result="";
         if(isAuthenticated(authToken)){//Always check if the user is  authenticated
 
+            if(accountMap.get(authToken).getMessageBox().isEmpty())//If the inbox is empty.
+                return "The inbox is empty!";
+
             for(Message m: accountMap.get(authToken).getMessageBox()){//For every message in the users messagebox
 
                 result=result.concat(m.getMessageId()+". from:"+ m.getSender());//We create the necessary string.
@@ -91,6 +94,8 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
                 result=result.concat("\n");
             }
             return result;
+
+
         }
         else//Not authenticated.
             return "Invalid Auth Token \n";
@@ -116,24 +121,22 @@ public class UtilitiesImpl extends UnicastRemoteObject implements Utilities {
     }
 
     @Override//This method implements the deletion of a message from a user's messagebox when requested.
-    public void deleteMessage(int authToken, int messageId) throws RemoteException {
+    public String deleteMessage(int authToken, int messageId) throws RemoteException {
+
         if(isAuthenticated(authToken)){//Always check if the user is  authenticated
 
-            boolean found=false;//The message has not been  found yet.
-
-            for(Message m: accountMap.get(authToken).getMessageBox()){//Search for the message ID in the user's messagebox.
+            for(Message m : accountMap.get(authToken).getMessageBox()){//Search for the message ID in the user's messagebox.
 
                 if(m.getMessageId()==messageId){//If the message ID matches an ID from the client's messagebox.
-                    found =true;//The message has been found
                     accountMap.get(authToken).deleteMessage(m);//we delete the message
-                    System.out.println("OK \n");
+                    return "OK \n";
                 }
             }
-            if (!found)//If the message has not been found.
-                System.out.println("Message ID does not exist \n");
+
+            return "Message ID does not exist \n";
         }
         else//Not authenticated.
-            System.out.println("Invalid Auth Token \n");
+            return "Invalid Auth Token \n";
     }
 
     //With this method we are checking if the username the client entered is valid.

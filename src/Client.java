@@ -98,7 +98,7 @@ public class Client {
                                 System.out.println("we are in 6");//FOR DEBUGGING
                                 int tkn = Integer.parseInt(args[3]);
                                 int msgID = Integer.parseInt(args[4]);
-                                stub.deleteMessage(tkn, msgID);
+                                System.out.println(stub.deleteMessage(tkn, msgID));
                             } catch (NumberFormatException e) {
                                 System.out.println("The authToken should be an integer\n");
                             }
@@ -106,7 +106,7 @@ public class Client {
 
                     }
                 } catch (Exception e) {
-                    System.out.println("Failed to connect to the registry");
+                    System.out.println("The task failed successfully!");
                 }
             }
             else

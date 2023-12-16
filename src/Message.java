@@ -27,10 +27,6 @@ public class Message implements java.io.Serializable {
         return sender;
     }
 
-    public String getReceiver() {
-        return receiver;
-    }
-
     public String getBody(){
         return body;
     }

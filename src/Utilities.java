@@ -1,5 +1,5 @@
 import java.rmi.*;
-import java.util.ArrayList;
+
 
 //The interface including all utilities that a client can ask.
 public interface Utilities extends Remote{
@@ -19,6 +19,6 @@ public interface Utilities extends Remote{
     String readMessage(int authToken,int messageId)
             throws RemoteException;
     //The user/client can delete the message with the given id from his messagebox.
-    void deleteMessage(int authToken,int messageId)
+    String deleteMessage(int authToken,int messageId)
             throws RemoteException;
 }
